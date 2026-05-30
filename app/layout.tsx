@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { ServiceWorkerRegister } from '@/components/service-worker-register'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -8,29 +9,25 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: 'JP Signals',
-  description: 'Review and rate algorithmic trading setups detected by your bot.',
-  generator: 'v0.app',
+  description: 'Review, grade, and track JP Gold Bot trading setups.',
+  manifest: '/manifest.webmanifest',
   icons: {
     icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
+      { url: '/icons/favicon-48.png', sizes: '48x48', type: 'image/png' },
+      { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' },
     ],
-    apple: '/apple-icon.png',
+    apple: '/icons/apple-touch-icon.png',
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'JP Signals',
   },
 }
 
 export const viewport: Viewport = {
-  themeColor: '#1a1916',
+  themeColor: '#0a0a0c',
   colorScheme: 'dark',
 }
 
@@ -43,6 +40,7 @@ export default function RootLayout({
     <html lang="en" className="dark bg-background">
       <body className="font-sans antialiased">
         {children}
+        <ServiceWorkerRegister />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

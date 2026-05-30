@@ -7,9 +7,9 @@ import type { Signal } from "./signals"
  * The fallback below lets the app build/run before it's configured.
  */
 export const BOT_URL =
-  process.env.NEXT_PUBLIC_BOT_URL?.replace(/\/$/, "") || "https://YOUR-BOT.onrender.com"
+  process.env.NEXT_PUBLIC_BOT_URL?.replace(/\/$/, "") || "https://tv-telegram-bot-bhuc.onrender.com"
 
-const isConfigured = !BOT_URL.includes("YOUR-BOT")
+const isConfigured = BOT_URL.startsWith("http") && !BOT_URL.includes("YOUR-BOT")
 
 /**
  * Fetch the live signal feed from the bot's /signals endpoint.
