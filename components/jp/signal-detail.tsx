@@ -1,29 +1,27 @@
 "use client"
 
-import { cn } from "@/lib/utils"
 import { type Signal, fmtPrice, fmtTime, fmtR } from "@/lib/signals"
 import { Drawer, DrawerContent } from "@/components/ui/drawer"
 import { Textarea } from "@/components/ui/textarea"
-import { DirectionDot, SessionBadge, TrendBadge, OutcomeBadge } from "./badges"
-import { GradeButtons } from "./grade-buttons"
-import { CandlestickChart, X } from "lucide-react"
+import { Icons } from "@/components/jp/icons"
+import { SideTag, StatusPill, sideOf, statusOf } from "@/components/jp/design-atoms"
 
-function DetailLevel({ label, value, tone }: { label: string; value: string; tone?: "bull" | "bear" | "gold" }) {
-  const toneClass =
-    tone === "bull" ? "text-bull" : tone === "bear" ? "text-bear" : tone === "gold" ? "text-gold" : "text-foreground"
+function Row({ label, value, color }: { label: string; value: string; color?: string }) {
   return (
-    <div className="flex items-center justify-between border-b border-border/60 py-3 last:border-0">
-      <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">{label}</span>
-      <span className={cn("font-mono text-[0.95rem] font-semibold tabular-nums", toneClass)}>{value}</span>
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: "12px 0",
+        borderBottom: "1px solid var(--hairline)",
+      }}
+    >
+      <span className="eyebrow">{label}</span>
+      <span className="num" style={{ fontSize: 14, fontWeight: 600, color: color ?? "var(--text-0)" }}>
+        {value}
+      </span>
     </div>
-  )
-}
-
-function SectionLabel({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
-      {children}
-    </span>
   )
 }
 
@@ -44,90 +42,112 @@ export function SignalDetail({
 }) {
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
-      <DrawerContent className="max-h-[93vh]">
+      <DrawerContent className="max-h-[93vh]" style={{ background: "var(--surface-1)", borderColor: "var(--hairline)" }}>
         {signal && (
-          <div className="flex min-h-0 flex-1 flex-col">
-            {/* sticky header */}
-            <div className="flex items-center justify-between gap-2 border-b border-border px-4 pb-3.5 pt-1">
-              <div className="flex items-center gap-3">
-                <span className="font-mono text-lg font-bold tracking-tight">{signal.symbol}</span>
-                <DirectionDot direction={signal.direction} />
+          <div style={{ display: "flex", minHeight: 0, flex: 1, flexDirection: "column", color: "var(--text-0)" }}>
+            {/* header */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: 10,
+                padding: "4px 18px 14px",
+                borderBottom: "1px solid var(--hairline)",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <SideTag side={sideOf(signal)} />
+                <span className="num" style={{ fontSize: 18, fontWeight: 700, letterSpacing: ".3px" }}>
+                  {signal.symbol}
+                </span>
+                <StatusPill status={statusOf(signal)} />
               </div>
               <button
                 type="button"
                 onClick={() => onOpenChange(false)}
                 aria-label="Close"
-                className="flex size-8 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:text-foreground"
+                className="iconbtn"
+                style={{ width: 32, height: 32 }}
               >
-                <X className="size-4" />
+                <Icons.x size={16} />
               </button>
             </div>
 
-            <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-8 pt-4">
-              <div className="flex flex-wrap items-center gap-1.5">
-                <SessionBadge session={signal.session} />
-                <TrendBadge trend={signal.trend_2h} />
-                <span className="font-mono text-[11px] text-muted-foreground">{fmtTime(signal.timestamp)}</span>
-                <span className="ml-auto font-mono text-[10px] text-muted-foreground/60">{signal.id}</span>
-              </div>
-
-              {/* chart placeholder */}
-              <div className="surface relative mt-4 flex aspect-[16/10] w-full flex-col items-center justify-center gap-2 overflow-hidden rounded-xl">
-                <div className="absolute inset-0 bg-[linear-gradient(oklch(0.255_0.009_60/0.5)_1px,transparent_1px),linear-gradient(90deg,oklch(0.255_0.009_60/0.5)_1px,transparent_1px)] bg-[size:28px_28px] opacity-40" />
-                <CandlestickChart className="relative size-7 text-muted-foreground/50" aria-hidden />
-                <span className="relative font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground/70">
-                  Setup chart
+            <div style={{ minHeight: 0, flex: 1, overflowY: "auto", padding: "16px 18px 28px" }}>
+              <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 10 }}>
+                <span className="num" style={{ fontSize: 11.5, color: "var(--text-2)" }}>
+                  {signal.session} {"\u00b7"} 2H {signal.trend_2h}
+                </span>
+                <span className="num" style={{ fontSize: 11.5, color: "var(--text-3)" }}>
+                  {fmtTime(signal.timestamp)}
+                </span>
+                <span className="num" style={{ marginLeft: "auto", fontSize: 10.5, color: "var(--text-3)" }}>
+                  {signal.id}
                 </span>
               </div>
 
               {/* outcome */}
-              <div className="surface mt-4 flex items-center justify-between rounded-xl px-4 py-3.5">
-                <SectionLabel>Outcome</SectionLabel>
-                <div className="flex items-center gap-2">
+              <div
+                className="card"
+                style={{ marginTop: 16, padding: "14px 16px", display: "flex", alignItems: "center", justifyContent: "space-between" }}
+              >
+                <span className="eyebrow">Outcome</span>
+                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                   {signal.r_result !== null && (
                     <span
-                      className={cn(
-                        "font-mono text-sm font-bold tabular-nums",
-                        signal.r_result > 0 ? "text-bull" : signal.r_result < 0 ? "text-bear" : "text-muted-foreground",
-                      )}
+                      className="num"
+                      style={{
+                        fontSize: 14,
+                        fontWeight: 700,
+                        color: signal.r_result > 0 ? "var(--up)" : signal.r_result < 0 ? "var(--down)" : "var(--text-2)",
+                      }}
                     >
                       {fmtR(signal.r_result)}
                     </span>
                   )}
-                  <OutcomeBadge outcome={signal.outcome} />
+                  <StatusPill status={statusOf(signal)} />
                 </div>
               </div>
 
               {/* levels */}
-              <div className="surface mt-4 rounded-xl px-4 py-1.5">
-                <DetailLevel label="Entry" value={fmtPrice(signal.entry)} />
-                <DetailLevel label="Stop loss" value={fmtPrice(signal.stop)} tone="bear" />
-                <DetailLevel label="Target" value={fmtPrice(signal.target)} tone="bull" />
-                <DetailLevel label="R:R target" value={`${signal.rr_target.toFixed(1)}R`} tone="gold" />
-                <DetailLevel label="Risk distance" value={`$${fmtPrice(signal.risk_distance)}`} />
-                <DetailLevel label="Risk in ATR" value={`${signal.risk_atr.toFixed(1)}× ATR`} />
-                <DetailLevel label="ATR" value={fmtPrice(signal.atr)} />
+              <div className="card" style={{ marginTop: 14, padding: "2px 16px" }}>
+                <Row label="Entry" value={fmtPrice(signal.entry)} />
+                <Row label="Stop loss" value={fmtPrice(signal.stop)} color="var(--down)" />
+                <Row label="Target" value={fmtPrice(signal.target)} color="var(--up)" />
+                <Row label="R:R target" value={`${signal.rr_target.toFixed(1)}R`} color="var(--accent)" />
+                <Row label="Risk distance" value={`$${fmtPrice(signal.risk_distance)}`} />
+                <Row label="Risk in ATR" value={`${signal.risk_atr.toFixed(1)}\u00d7 ATR`} />
+                <div style={{ borderBottom: "none" }}>
+                  <Row label="ATR" value={fmtPrice(signal.atr)} />
+                </div>
               </div>
 
-              {/* eye agreement */}
-              <div className="mt-5">
-                <SectionLabel>Manual review</SectionLabel>
-                <div className="mt-2.5 grid grid-cols-2 gap-2">
+              {/* manual review */}
+              <div style={{ marginTop: 20 }}>
+                <span className="eyebrow">Manual review (your eye)</span>
+                <div style={{ marginTop: 10, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
                   {(["agree", "skip"] as const).map((a) => {
                     const active = signal.eye_agreement === a
+                    const c = a === "agree" ? "var(--up)" : "var(--down)"
                     return (
                       <button
                         key={a}
                         type="button"
                         onClick={() => onAgreement(signal.id, active ? null : a)}
-                        className={cn(
-                          "rounded-lg border py-3 text-sm font-semibold capitalize transition-all duration-150",
-                          active
-                            ? a === "agree"
-                              ? "border-bull/50 bg-bull/15 text-bull glow-bull"
-                              : "border-bear/50 bg-bear/15 text-bear glow-bear"
-                            : "border-border bg-secondary/40 text-muted-foreground hover:text-foreground",
-                        )}
+                        className="tap"
+                        style={{
+                          padding: "12px 0",
+                          borderRadius: 12,
+                          fontFamily: "var(--font)",
+                          fontSize: 13.5,
+                          fontWeight: 600,
+                          textTransform: "capitalize",
+                          cursor: "pointer",
+                          color: active ? c : "var(--text-2)",
+                          border: `1px solid ${active ? c : "var(--hairline)"}`,
+                          background: active ? (a === "agree" ? "var(--up-dim)" : "var(--down-dim)") : "var(--surface-2)",
+                        }}
                       >
                         {a}
                       </button>
@@ -137,19 +157,45 @@ export function SignalDetail({
               </div>
 
               {/* grade */}
-              <div className="mt-5 flex items-center justify-between">
-                <SectionLabel>Grade</SectionLabel>
-                <GradeButtons value={signal.grade} onChange={(g) => onGrade(signal.id, g)} size="lg" />
+              <div style={{ marginTop: 20 }}>
+                <span className="eyebrow">Grade</span>
+                <div style={{ marginTop: 10, display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }}>
+                  {(["A", "B", "C"] as const).map((g) => {
+                    const active = signal.grade === g
+                    const c = g === "A" ? "var(--up)" : g === "B" ? "var(--accent)" : "var(--text-2)"
+                    return (
+                      <button
+                        key={g}
+                        type="button"
+                        onClick={() => onGrade(signal.id, active ? null : g)}
+                        className="num tap"
+                        style={{
+                          padding: "12px 0",
+                          borderRadius: 12,
+                          fontSize: 16,
+                          fontWeight: 700,
+                          cursor: "pointer",
+                          color: active ? c : "var(--text-2)",
+                          border: `1px solid ${active ? c : "var(--hairline)"}`,
+                          background: active ? "var(--surface-3)" : "var(--surface-2)",
+                        }}
+                      >
+                        {g}
+                      </button>
+                    )
+                  })}
+                </div>
               </div>
 
               {/* notes */}
-              <div className="mt-5">
-                <SectionLabel>Notes</SectionLabel>
+              <div style={{ marginTop: 20 }}>
+                <span className="eyebrow">Notes</span>
                 <Textarea
                   value={signal.notes ?? ""}
                   onChange={(e) => onNotes(signal.id, e.target.value)}
-                  placeholder="Add your read on this setup…"
-                  className="mt-2.5 min-h-24 resize-none bg-secondary/30 text-sm"
+                  placeholder="Add your read on this setup\u2026"
+                  className="mt-2.5 min-h-24 resize-none text-sm"
+                  style={{ background: "var(--surface-2)", borderColor: "var(--hairline)", color: "var(--text-0)", marginTop: 10 }}
                 />
               </div>
             </div>

@@ -1,0 +1,261 @@
+/* ============================================================
+   JP Signals — premium dark design system
+   Deep black · silver / cool-white · electric cyan
+   ============================================================ */
+
+:root {
+  /* surfaces — cool-toned near-blacks */
+  --bg:        #070709;
+  --bg-stage:  #050506;
+  --surface-1: #0c0d11;   /* raised panel */
+  --surface-2: #111319;   /* card */
+  --surface-3: #171a22;   /* inset / control */
+  --hairline:  rgba(255,255,255,0.065);
+  --hairline-2:rgba(255,255,255,0.11);
+
+  /* text — cool whites & silvers */
+  --text-0: #f3f5f8;
+  --text-1: #cdd3dc;
+  --text-2: #8b929d;
+  --text-3: #565c66;
+
+  --silver:  #c8cfd8;
+  --silver-2:#7f8793;
+
+  /* semantic */
+  --up:   #4ed49a;   /* cool green */
+  --up-dim: rgba(78,212,154,0.14);
+  --down: #e0697b;   /* muted red */
+  --down-dim: rgba(224,105,123,0.13);
+
+  /* accent — overridden per direction via JS */
+  --accent:      #3ad0ff;
+  --accent-soft: rgba(58,208,255,0.14);
+  --accent-line: rgba(58,208,255,0.45);
+  --glow:        0 0 0 rgba(0,0,0,0);
+  --chart:       var(--accent);
+
+  --r-lg: 26px;
+  --r-md: 18px;
+  --r-sm: 12px;
+
+  --font: "Geist", system-ui, -apple-system, sans-serif;
+  --mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --pad: 20px;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+
+
+/* ---- stage that centers + scales the phone ---- */
+
+
+/* ---------- phone shell ---------- */
+
+
+/* dynamic island */
+
+
+/* ---------- ambient background pattern ---------- */
+.bg-field {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.bg-field svg { position:absolute; inset:0; width:100%; height:100%; }
+.bg-glow {
+  position:absolute;
+  width: 360px; height: 360px;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: var(--glow-op, 0.22);
+  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+  top: -120px; left: -60px;
+  transition: opacity .4s ease;
+}
+
+/* ---------- status bar ---------- */
+
+
+
+
+/* ---------- scroll body ---------- */
+.screen {
+  position: relative;
+  z-index: 10;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 4px var(--pad) 124px;
+  scrollbar-width: none;
+}
+.screen::-webkit-scrollbar { display: none; }
+
+/* ---------- bottom nav ---------- */
+.navbar {
+  position: absolute;
+  z-index: 55;
+  left: 12px; right: 12px; bottom: 12px;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 6px;
+  border-radius: 30px;
+  background: rgba(14,15,19,0.72);
+  backdrop-filter: blur(22px) saturate(1.3);
+  -webkit-backdrop-filter: blur(22px) saturate(1.3);
+  border: 1px solid var(--hairline);
+  box-shadow: 0 -2px 40px -10px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.04);
+}
+.nav-item {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 0 8px;
+  color: var(--text-3);
+  cursor: pointer;
+  transition: color .2s ease;
+  background: none; border: none;
+  font-family: var(--font);
+}
+.nav-item span {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .3px;
+}
+.nav-item.active { color: var(--text-0); }
+.nav-item.active .nav-ico { color: var(--accent); }
+.nav-dot {
+  position: absolute;
+  top: 2px;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+.nav-item.active .nav-dot { opacity: 1; }
+
+/* ---------- shared atoms ---------- */
+.card {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.024), rgba(255,255,255,0) 40%),
+    var(--surface-2);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.035);
+}
+.card-pad { padding: 18px; }
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-3);
+  font-weight: 500;
+}
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; letter-spacing: -0.5px; }
+
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--mono);
+  font-size: 11px; font-weight: 600;
+  letter-spacing: .4px;
+  padding: 6px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--hairline-2);
+  color: var(--text-1);
+  background: rgba(255,255,255,0.02);
+}
+.chip.live { color: var(--up); border-color: rgba(78,212,154,0.32); background: var(--up-dim); }
+
+.dot { width:7px; height:7px; border-radius:50%; display:inline-block; }
+.dot.live { background: var(--up); box-shadow: 0 0 10px var(--up); }
+
+.pos { color: var(--up); }
+.neg { color: var(--down); }
+
+.divider { height:1px; background: var(--hairline); border:0; margin: 0; }
+
+/* fade/slide for screen transitions */
+@keyframes screenIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.screen-anim { animation: screenIn .34s cubic-bezier(.22,.61,.36,1); }
+
+@keyframes drawLine { to { stroke-dashoffset: 0; } }
+@keyframes barRise { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes popIn { from { opacity:0; transform: scale(.96);} to {opacity:1; transform:scale(1);} }
+
+/* tap feedback */
+.tap { transition: transform .12s ease, background .2s ease; cursor: pointer; }
+.tap:active { transform: scale(0.975); }
+
+/* icon button */
+.iconbtn {
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  border-radius: 12px;
+  border: 1px solid var(--hairline);
+  background: var(--surface-1);
+  color: var(--text-1);
+  cursor: pointer;
+  transition: all .18s ease;
+}
+.iconbtn:active { transform: scale(0.94); background: var(--surface-3); }
+
+.noscroll { scrollbar-width: none; }
+.noscroll::-webkit-scrollbar { display: none; }
+
+/* segmented control */
+.seg {
+  display: flex;
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  padding: 3px;
+  gap: 2px;
+}
+.seg button {
+  flex: 1;
+  border: 0; background: none;
+  font-family: var(--mono);
+  font-size: 11.5px; font-weight: 600;
+  letter-spacing: .5px;
+  color: var(--text-3);
+  padding: 7px 0;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+.seg button.on {
+  color: var(--text-0);
+  background: var(--surface-3);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+/* ---- app shell (real PWA, full-viewport; replaces the canvas phone frame) ---- */
+.jp-shell {
+  position: relative;
+  min-height: 100vh;
+  max-width: 460px;
+  margin: 0 auto;
+  background: var(--bg);
+  overflow-x: hidden;
+}
+.jp-shell .screen {
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 112px;
+}
