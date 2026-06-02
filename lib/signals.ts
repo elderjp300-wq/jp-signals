@@ -22,6 +22,7 @@ export interface Signal {
   grade: Grade
   eye_agreement: EyeAgreement
   notes: string | null
+  chart_url?: string | null
   outcome: Outcome
   r_result: number | null
   fill_status: string | null

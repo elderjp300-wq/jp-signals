@@ -71,14 +71,23 @@ export function SignalDetail({
                 <span className="ml-auto font-mono text-[10px] text-muted-foreground/60">{signal.id}</span>
               </div>
 
-              {/* chart placeholder */}
-              <div className="surface relative mt-4 flex aspect-[16/10] w-full flex-col items-center justify-center gap-2 overflow-hidden rounded-xl">
-                <div className="absolute inset-0 bg-[linear-gradient(oklch(0.255_0.009_60/0.5)_1px,transparent_1px),linear-gradient(90deg,oklch(0.255_0.009_60/0.5)_1px,transparent_1px)] bg-[size:28px_28px] opacity-40" />
-                <CandlestickChart className="relative size-7 text-muted-foreground/50" aria-hidden />
-                <span className="relative font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground/70">
-                  Setup chart
-                </span>
-              </div>
+              {/* setup chart — real image when hosted, placeholder otherwise */}
+              {signal.chart_url ? (
+                <img
+                  src={signal.chart_url}
+                  alt={`Setup chart for ${signal.id}`}
+                  className="mt-4 w-full overflow-hidden rounded-xl border border-border/60"
+                  loading="lazy"
+                />
+              ) : (
+                <div className="surface relative mt-4 flex aspect-[16/10] w-full flex-col items-center justify-center gap-2 overflow-hidden rounded-xl">
+                  <div className="absolute inset-0 bg-[linear-gradient(oklch(0.255_0.009_60/0.5)_1px,transparent_1px),linear-gradient(90deg,oklch(0.255_0.009_60/0.5)_1px,transparent_1px)] bg-[size:28px_28px] opacity-40" />
+                  <CandlestickChart className="relative size-7 text-muted-foreground/50" aria-hidden />
+                  <span className="relative font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground/70">
+                    No chart for this setup
+                  </span>
+                </div>
+              )}
 
               {/* outcome */}
               <div className="surface mt-4 flex items-center justify-between rounded-xl px-4 py-3.5">
