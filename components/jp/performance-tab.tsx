@@ -68,7 +68,7 @@ function Heatmap({ cells }: { cells: HeatCell[] }) {
     if (wr === null) return {}
     const a = Math.min(0.85, 0.12 + Math.abs(wr - 0.5) * 1.5)
     return {
-      backgroundColor: wr >= 0.5 ? `oklch(0.75 0.105 160 / ${a})` : `oklch(0.68 0.16 30 / ${a})`,
+      backgroundColor: wr >= 0.5 ? `rgba(78,212,154,${a})` : `rgba(224,105,123,${a})`,
     }
   }
   return (

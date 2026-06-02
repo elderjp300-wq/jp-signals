@@ -14,7 +14,7 @@ import { CumulativeRChart } from "./charts"
 import { BotStatus } from "./bot-status"
 import { TrendingUp } from "lucide-react"
 
-export function OverviewTab({ signals }: { signals: Signal[] }) {
+export function OverviewTab({ signals, live = true }: { signals: Signal[]; live?: boolean }) {
   const total = signals.length
   const graded = signals.filter((s) => s.grade !== null).length
   const settled = settledSignals(signals)
@@ -27,7 +27,7 @@ export function OverviewTab({ signals }: { signals: Signal[] }) {
   return (
     <div className="space-y-4 px-4 pb-4 pt-3">
       {/* live bot status — replaces the old grading card */}
-      <BotStatus signals={signals} />
+      <BotStatus signals={signals} live={live} />
 
       {/* hero stats */}
       <div className="grid grid-cols-2 gap-3">

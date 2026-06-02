@@ -3,93 +3,121 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* =========================================================================
+   JP Signals — cool-black / silver / electric-cyan re-skin.
+   Token NAMES are unchanged from the original app so every component keeps
+   working untouched; only the VALUES change (gold -> cyan, warm -> cool).
+   ========================================================================= */
 :root {
-  /* Deep institutional warm-charcoal palette */
-  --background: oklch(0.145 0.008 60);
-  --foreground: oklch(0.965 0.006 85);
-  --card: oklch(0.182 0.008 60);
-  --card-foreground: oklch(0.965 0.006 85);
-  --popover: oklch(0.2 0.009 60);
-  --popover-foreground: oklch(0.965 0.006 85);
-  --primary: oklch(0.83 0.145 82);
-  --primary-foreground: oklch(0.18 0.02 70);
-  --secondary: oklch(0.23 0.008 60);
-  --secondary-foreground: oklch(0.965 0.006 85);
-  --muted: oklch(0.23 0.008 60);
-  --muted-foreground: oklch(0.67 0.012 75);
-  --accent: oklch(0.26 0.01 60);
-  --accent-foreground: oklch(0.965 0.006 85);
-  --destructive: oklch(0.68 0.16 30);
-  --destructive-foreground: oklch(0.16 0.02 35);
-  --border: oklch(0.255 0.009 60);
-  --input: oklch(0.255 0.009 60);
-  --ring: oklch(0.83 0.145 82);
+  /* deep cool-black surfaces (design.md §1.1) */
+  --background: #070709;
+  --foreground: #f3f5f8;
+  --card: #111319;
+  --card-foreground: #f3f5f8;
+  --popover: #111319;
+  --popover-foreground: #f3f5f8;
 
-  /* Trading semantics — richer, higher energy */
-  --bull: oklch(0.75 0.105 160);
-  --bull-foreground: oklch(0.16 0.02 160);
-  --bear: oklch(0.68 0.16 30);
-  --bear-foreground: oklch(0.16 0.02 35);
-  --gold: oklch(0.83 0.145 82);
-  --gold-bright: oklch(0.9 0.135 90);
+  /* accent = electric cyan (was gold) */
+  --primary: #3ad0ff;
+  --primary-foreground: #04141b;
+  --secondary: #171a22;
+  --secondary-foreground: #f3f5f8;
+  --muted: #171a22;
+  --muted-foreground: #8b929d;
+  --accent: #171a22;
+  --accent-foreground: #f3f5f8;
+  --destructive: #e0697b;
+  --destructive-foreground: #150a0c;
+  --border: rgba(255, 255, 255, 0.065);
+  --input: rgba(255, 255, 255, 0.11);
+  --ring: #3ad0ff;
 
-  /* Charts */
-  --chart-1: oklch(0.83 0.145 82);
-  --chart-2: oklch(0.75 0.105 160);
-  --chart-3: oklch(0.68 0.16 30);
-  --chart-4: oklch(0.66 0.012 75);
-  --chart-5: oklch(0.6 0.09 250);
+  /* trading semantics — cool green up / muted red down */
+  --bull: #4ed49a;
+  --bull-foreground: #04140d;
+  --bear: #e0697b;
+  --bear-foreground: #150a0c;
+  /* "gold" tokens kept by name but repointed to cyan so legacy classes go cyan */
+  --gold: #3ad0ff;
+  --gold-bright: #7fd9ff;
 
-  --radius: 0.75rem;
-  --sidebar: oklch(0.182 0.008 60);
-  --sidebar-foreground: oklch(0.965 0.006 85);
-  --sidebar-primary: oklch(0.83 0.145 82);
-  --sidebar-primary-foreground: oklch(0.18 0.02 70);
-  --sidebar-accent: oklch(0.26 0.01 60);
-  --sidebar-accent-foreground: oklch(0.965 0.006 85);
-  --sidebar-border: oklch(0.255 0.009 60);
-  --sidebar-ring: oklch(0.83 0.145 82);
+  /* extra design tokens (silver + surface ladder) for targeted use */
+  --silver: #c8cfd8;
+  --silver-2: #7f8793;
+  --surface-1: #0c0d11;
+  --surface-2: #111319;
+  --surface-3: #171a22;
+  --hairline: rgba(255, 255, 255, 0.065);
+  --hairline-2: rgba(255, 255, 255, 0.11);
+  --text-0: #f3f5f8;
+  --text-1: #cdd3dc;
+  --text-2: #8b929d;
+  --text-3: #565c66;
+  --up: #4ed49a;
+  --up-dim: rgba(78, 212, 154, 0.14);
+  --down: #e0697b;
+  --down-dim: rgba(224, 105, 123, 0.13);
+  --accent-cyan: #3ad0ff;
+  --accent-soft: rgba(58, 208, 255, 0.14);
+  --accent-line: rgba(58, 208, 255, 0.45);
+
+  /* charts — cyan / green / red / silver / azure */
+  --chart-1: #3ad0ff;
+  --chart-2: #4ed49a;
+  --chart-3: #e0697b;
+  --chart-4: #8b929d;
+  --chart-5: #5aa6ff;
+
+  --radius: 1.125rem; /* 18px cards (design.md §3) */
+  --sidebar: #111319;
+  --sidebar-foreground: #f3f5f8;
+  --sidebar-primary: #3ad0ff;
+  --sidebar-primary-foreground: #04141b;
+  --sidebar-accent: #171a22;
+  --sidebar-accent-foreground: #f3f5f8;
+  --sidebar-border: rgba(255, 255, 255, 0.065);
+  --sidebar-ring: #3ad0ff;
 }
 
 .dark {
-  --background: oklch(0.145 0.008 60);
-  --foreground: oklch(0.965 0.006 85);
-  --card: oklch(0.182 0.008 60);
-  --card-foreground: oklch(0.965 0.006 85);
-  --popover: oklch(0.2 0.009 60);
-  --popover-foreground: oklch(0.965 0.006 85);
-  --primary: oklch(0.83 0.145 82);
-  --primary-foreground: oklch(0.18 0.02 70);
-  --secondary: oklch(0.23 0.008 60);
-  --secondary-foreground: oklch(0.965 0.006 85);
-  --muted: oklch(0.23 0.008 60);
-  --muted-foreground: oklch(0.67 0.012 75);
-  --accent: oklch(0.26 0.01 60);
-  --accent-foreground: oklch(0.965 0.006 85);
-  --destructive: oklch(0.68 0.16 30);
-  --destructive-foreground: oklch(0.16 0.02 35);
-  --border: oklch(0.255 0.009 60);
-  --input: oklch(0.255 0.009 60);
-  --ring: oklch(0.83 0.145 82);
-  --bull: oklch(0.75 0.105 160);
-  --bull-foreground: oklch(0.16 0.02 160);
-  --bear: oklch(0.68 0.16 30);
-  --bear-foreground: oklch(0.16 0.02 35);
-  --gold: oklch(0.83 0.145 82);
-  --gold-bright: oklch(0.9 0.135 90);
-  --chart-1: oklch(0.83 0.145 82);
-  --chart-2: oklch(0.75 0.105 160);
-  --chart-3: oklch(0.68 0.16 30);
-  --chart-4: oklch(0.66 0.012 75);
-  --chart-5: oklch(0.6 0.09 250);
-  --sidebar: oklch(0.182 0.008 60);
-  --sidebar-foreground: oklch(0.965 0.006 85);
-  --sidebar-primary: oklch(0.83 0.145 82);
-  --sidebar-primary-foreground: oklch(0.18 0.02 70);
-  --sidebar-accent: oklch(0.26 0.01 60);
-  --sidebar-accent-foreground: oklch(0.965 0.006 85);
-  --sidebar-border: oklch(0.255 0.009 60);
-  --sidebar-ring: oklch(0.83 0.145 82);
+  --background: #070709;
+  --foreground: #f3f5f8;
+  --card: #111319;
+  --card-foreground: #f3f5f8;
+  --popover: #111319;
+  --popover-foreground: #f3f5f8;
+  --primary: #3ad0ff;
+  --primary-foreground: #04141b;
+  --secondary: #171a22;
+  --secondary-foreground: #f3f5f8;
+  --muted: #171a22;
+  --muted-foreground: #8b929d;
+  --accent: #171a22;
+  --accent-foreground: #f3f5f8;
+  --destructive: #e0697b;
+  --destructive-foreground: #150a0c;
+  --border: rgba(255, 255, 255, 0.065);
+  --input: rgba(255, 255, 255, 0.11);
+  --ring: #3ad0ff;
+  --bull: #4ed49a;
+  --bull-foreground: #04140d;
+  --bear: #e0697b;
+  --bear-foreground: #150a0c;
+  --gold: #3ad0ff;
+  --gold-bright: #7fd9ff;
+  --chart-1: #3ad0ff;
+  --chart-2: #4ed49a;
+  --chart-3: #e0697b;
+  --chart-4: #8b929d;
+  --chart-5: #5aa6ff;
+  --sidebar: #111319;
+  --sidebar-foreground: #f3f5f8;
+  --sidebar-primary: #3ad0ff;
+  --sidebar-primary-foreground: #04141b;
+  --sidebar-accent: #171a22;
+  --sidebar-accent-foreground: #f3f5f8;
+  --sidebar-border: rgba(255, 255, 255, 0.065);
+  --sidebar-ring: #3ad0ff;
 }
 
 @theme inline {
@@ -125,10 +153,10 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
+  --radius-sm: calc(var(--radius) - 6px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 8px);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -145,9 +173,13 @@
   }
   body {
     @apply bg-background text-foreground;
+    /* faint cool grid + single soft cyan radial (design.md §3), no warm glow */
+    background-color: var(--background);
     background-image:
-      radial-gradient(130% 80% at 50% -15%, oklch(0.83 0.145 82 / 0.07), transparent 55%),
-      radial-gradient(100% 60% at 100% 0%, oklch(0.75 0.105 160 / 0.04), transparent 50%);
+      radial-gradient(90% 55% at 12% -8%, rgba(58, 208, 255, 0.06), transparent 60%),
+      linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+    background-size: 100% 100%, 34px 34px, 34px 34px;
     background-attachment: fixed;
   }
   .tabular-nums {
@@ -156,48 +188,40 @@
 }
 
 @layer utilities {
-  /* Layered, elevated card with inset highlight + depth shadow */
+  /* flat premium card: hairline border + faint top sheen, NO outer glow */
   .surface {
-    background: linear-gradient(
-      180deg,
-      oklch(0.205 0.009 60) 0%,
-      oklch(0.168 0.008 60) 100%
-    );
-    box-shadow:
-      inset 0 1px 0 0 oklch(1 0 0 / 0.045),
-      0 1px 2px 0 oklch(0 0 0 / 0.5),
-      0 12px 28px -16px oklch(0 0 0 / 0.7);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 38%),
+      var(--surface-2);
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.035);
   }
   .surface-flat {
-    background: oklch(0.182 0.008 60);
-    box-shadow: inset 0 1px 0 0 oklch(1 0 0 / 0.03);
+    background: var(--surface-1);
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.03);
   }
-  /* Frosted glass for chrome (header / nav) */
   .glass {
-    background: oklch(0.16 0.008 60 / 0.72);
-    backdrop-filter: blur(22px) saturate(1.5);
-    -webkit-backdrop-filter: blur(22px) saturate(1.5);
+    background: rgba(14, 15, 19, 0.72);
+    backdrop-filter: blur(22px) saturate(1.4);
+    -webkit-backdrop-filter: blur(22px) saturate(1.4);
   }
-  /* Gold accent glow */
+  /* glow utilities flattened to hairline accent rings (no heavy outer glow) */
   .glow-gold {
     box-shadow:
-      inset 0 1px 0 0 oklch(0.9 0.135 90 / 0.15),
-      0 0 0 1px oklch(0.83 0.145 82 / 0.22),
-      0 0 32px -6px oklch(0.83 0.145 82 / 0.35);
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.04),
+      0 0 0 1px var(--accent-line);
   }
   .glow-bull {
-    box-shadow: 0 0 0 1px oklch(0.75 0.105 160 / 0.25), 0 0 24px -8px oklch(0.75 0.105 160 / 0.4);
+    box-shadow: 0 0 0 1px rgba(78, 212, 154, 0.3);
   }
   .glow-bear {
-    box-shadow: 0 0 0 1px oklch(0.68 0.16 30 / 0.25), 0 0 24px -8px oklch(0.68 0.16 30 / 0.4);
+    box-shadow: 0 0 0 1px rgba(224, 105, 123, 0.3);
   }
   .text-gradient-gold {
-    background: linear-gradient(180deg, oklch(0.94 0.12 92) 0%, oklch(0.8 0.145 78) 100%);
+    background: linear-gradient(180deg, #7fd9ff 0%, #3ad0ff 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
-  /* Animated scan line for the bot status module */
   @keyframes scan-sweep {
     0% { transform: translateX(-110%); }
     100% { transform: translateX(110%); }

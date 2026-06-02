@@ -114,7 +114,7 @@ export default function Page() {
             </span>
           </div>
         ) : tab === "overview" ? (
-          <OverviewTab signals={signals} />
+          <OverviewTab signals={signals} live={!offline} />
         ) : tab === "signals" ? (
           <SignalsTab signals={signals} onGrade={onGrade} onOpen={setOpenId} />
         ) : (

@@ -15,12 +15,12 @@ import {
 } from "recharts"
 import type { RateBucket, EquityPoint } from "@/lib/signals"
 
-const GOLD = "oklch(0.83 0.145 82)"
-const GOLD_BRIGHT = "oklch(0.9 0.135 90)"
-const MUTED = "oklch(0.67 0.012 75)"
-const GRID = "oklch(0.255 0.009 60)"
-const BULL = "oklch(0.75 0.105 160)"
-const BEAR = "oklch(0.68 0.16 30)"
+const GOLD = "#3ad0ff"          // re-skin: accent is now cyan (kept name to limit churn)
+const GOLD_BRIGHT = "#7fd9ff"
+const MUTED = "#8b929d"          // cool tertiary
+const GRID = "rgba(255,255,255,0.07)"
+const BULL = "#4ed49a"
+const BEAR = "#e0697b"
 
 function ChartTip({
   active,
@@ -153,7 +153,7 @@ export function MonthlyRBars({ data }: { data: { key: string; r: number }[] }) {
           tickFormatter={(v) => `${v}R`}
         />
         <ReferenceLine y={0} stroke={GRID} />
-        <Tooltip content={<ChartTip suffix="R" />} cursor={{ fill: "oklch(0.26 0.01 60 / 0.5)" }} />
+        <Tooltip content={<ChartTip suffix="R" />} cursor={{ fill: "rgba(255,255,255,0.05)" }} />
         <Bar dataKey="r" radius={[4, 4, 0, 0]} maxBarSize={48}>
           {data.map((d) => (
             <Cell key={d.key} fill={d.r >= 0 ? BULL : BEAR} />
@@ -210,7 +210,7 @@ export function WinRateBars({
           domain={[0, 100]}
           tickFormatter={(v) => `${v}%`}
         />
-        <Tooltip content={<ChartTip suffix="%" />} cursor={{ fill: "oklch(0.26 0.01 60 / 0.5)" }} />
+        <Tooltip content={<ChartTip suffix="%" />} cursor={{ fill: "rgba(255,255,255,0.05)" }} />
         <Bar dataKey="rate" radius={[4, 4, 0, 0]} maxBarSize={56}>
           {data.map((d, i) => (
             <Cell key={d.key} fill={d.total === 0 ? GRID : highlightFirst && i === 0 ? GOLD : MUTED} />
@@ -230,7 +230,7 @@ export function GradeDistributionBar({ data }: { data: { grade: string; count: n
       </div>
     )
   }
-  const colors: Record<string, string> = { A: GOLD, B: "oklch(0.7 0.01 75)", C: "oklch(0.45 0.008 60)" }
+  const colors: Record<string, string> = { A: GOLD, B: "#c8cfd8", C: "#7f8793" }
   return (
     <div className="space-y-2">
       <div className="flex h-2.5 w-full overflow-hidden rounded-full bg-secondary">
