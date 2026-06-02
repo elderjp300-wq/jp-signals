@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
-import { type Signal, getSignals } from "@/lib/signals"
+import { type Signal } from "@/lib/signals"
 import { fetchSignals, updateSignal as pushUpdate } from "@/lib/api"
 import { BottomNav, type TabKey } from "@/components/jp/bottom-nav"
 import { OverviewTab } from "@/components/jp/overview-tab"
@@ -19,17 +19,19 @@ export default function Page() {
   const [tab, setTab] = useState<TabKey>("overview")
   const [signals, setSignals] = useState<Signal[]>([])
   const [loading, setLoading] = useState(true)
+  const [offline, setOffline] = useState(false)
   const [openId, setOpenId] = useState<string | null>(null)
 
-  // Load the live feed from the bot; fall back to mock data if it's
-  // unreachable (cold start / not yet configured) so the UI always renders.
+  // Load the live feed from the bot. NO silent mock fallback — if the bot is
+  // unreachable (Render cold start ~50s, or asleep) we show an Offline state
+  // rather than fake data, so what you see is always the bot's real truth.
   useEffect(() => {
     let active = true
     ;(async () => {
       const live = await fetchSignals()
-      const data = live ?? (await getSignals())
       if (active) {
-        setSignals(data)
+        setSignals(live ?? [])
+        setOffline(live === null)
         setLoading(false)
       }
     })()
@@ -70,12 +72,18 @@ export default function Page() {
             </span>
           </div>
         </div>
-        <div className="flex items-center gap-1.5 rounded-full border border-bull/30 bg-bull/10 px-2.5 py-1">
+        <div className={offline
+            ? "flex items-center gap-1.5 rounded-full border border-border bg-muted/30 px-2.5 py-1"
+            : "flex items-center gap-1.5 rounded-full border border-bull/30 bg-bull/10 px-2.5 py-1"}>
           <span className="relative flex size-1.5">
-            <span className="animate-live-ping absolute inline-flex size-1.5 rounded-full bg-bull" />
-            <span className="relative inline-flex size-1.5 rounded-full bg-bull" />
+            {!offline && <span className="animate-live-ping absolute inline-flex size-1.5 rounded-full bg-bull" />}
+            <span className={offline ? "relative inline-flex size-1.5 rounded-full bg-muted-foreground" : "relative inline-flex size-1.5 rounded-full bg-bull"} />
           </span>
-          <span className="font-mono text-[10px] font-semibold uppercase tracking-widest text-bull">Live</span>
+          <span className={offline
+              ? "font-mono text-[10px] font-semibold uppercase tracking-widest text-muted-foreground"
+              : "font-mono text-[10px] font-semibold uppercase tracking-widest text-bull"}>
+            {offline ? "Offline" : "Live"}
+          </span>
         </div>
       </header>
 
@@ -84,7 +92,25 @@ export default function Page() {
         {loading ? (
           <div className="flex h-64 items-center justify-center">
             <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-              Loading feed…
+              Connecting to bot…
+            </span>
+          </div>
+        ) : offline ? (
+          <div className="flex h-64 flex-col items-center justify-center gap-2 px-8 text-center">
+            <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+              Bot offline
+            </span>
+            <span className="text-xs text-muted-foreground/70">
+              Couldn't reach the detector (it may be waking from sleep). Pull to refresh in a moment.
+            </span>
+          </div>
+        ) : signals.length === 0 ? (
+          <div className="flex h-64 flex-col items-center justify-center gap-2 px-8 text-center">
+            <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+              No signals yet
+            </span>
+            <span className="text-xs text-muted-foreground/70">
+              Connected to the bot — it just hasn't logged any setups yet. Real signals will appear here.
             </span>
           </div>
         ) : tab === "overview" ? (
